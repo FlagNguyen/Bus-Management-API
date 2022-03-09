@@ -7,6 +7,7 @@ import ITSOL.Bus.Management.Full.Stack.DTO.Response.DriverResponse;
 import ITSOL.Bus.Management.Full.Stack.Exception.ResourceNotFoundException;
 import ITSOL.Bus.Management.Full.Stack.Service.AbstractService;
 import ITSOL.Bus.Management.Full.Stack.Service.DriverService;
+import ITSOL.Bus.Management.Full.Stack.Utility.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,8 @@ public class DriverServiceImpl extends AbstractService implements DriverService 
 
     @Autowired
     DriverRepository driverRepository;
+
+    StringUtil stringUtil;
 
     @Override
     public Optional<List<DriverResponse>> getAll() {
@@ -44,7 +47,7 @@ public class DriverServiceImpl extends AbstractService implements DriverService 
             throw new ResourceNotFoundException("resource not found");
         });
         int curId = driverResponses.size() + 10000;
-        Drivers drivers = new Drivers(curId, driverRequest.getName(),driverRequest.getAddress(),driverRequest.getPhone(),driverRequest.getDLevel(),0);
+        Drivers drivers = new Drivers(curId, stringUtil.standardlizeString(driverRequest.getName()),stringUtil.standardlizeString(driverRequest.getAddress()),driverRequest.getPhone(),driverRequest.getDLevel(),0);
         driverRepository.addDrivers(drivers);
         return Optional.of(objectMapper.convertValue(driverRequest, DriverResponse.class));
     }
