@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "drivers")
-public class DriverController extends AbstractController<DriverService>{
+public class DriverController extends AbstractController<DriverService> {
 
     @GetMapping(path = "")
     public ResponseEntity<?> getAll(){
