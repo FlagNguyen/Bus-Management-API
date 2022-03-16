@@ -1,5 +1,6 @@
 package ITSOL.Bus.Management.Full.Stack.Service;
 
+import ITSOL.Bus.Management.Full.Stack.Utility.ObjectValidator;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,9 @@ public abstract class AbstractService {
     protected Environment env;
 
     protected ObjectMapper objectMapper;
+
+    @Autowired
+    protected ObjectValidator objectValidator;
 
     @PostConstruct
     public void init(){

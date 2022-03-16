@@ -11,7 +11,7 @@ import javax.validation.constraints.NotEmpty;
 @NoArgsConstructor
 public class RouteRequest {
     @NotEmpty(message = "Distance is mandatory")
-    private float distance;
+    private String distance;
     @NotEmpty(message = "Stations is mandatory")
-    private int stations;
+    private String stations;
 }

@@ -7,8 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RouteResponse {
-    private int route_ID;
-    private String distance;
-    private String stations;
+public class ErrorResponse {
+    private String errorCode;
+    private String errorMessage;
 }

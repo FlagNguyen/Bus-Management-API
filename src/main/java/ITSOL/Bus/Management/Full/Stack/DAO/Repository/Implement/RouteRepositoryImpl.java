@@ -23,13 +23,25 @@ public class RouteRepositoryImpl extends AbstractRepository implements RouteRepo
     }
 
     @Override
+    public Optional<List<Route>> getTotalRoute() {
+        StringBuilder sql = new StringBuilder();
+        sql.append("SELECT * ");
+        sql.append("FROM ROUTE ");
+        List<Route> routes = jdbcTemplate.query(sql.toString(), new BeanPropertyRowMapper<>(Route.class));
+        return Optional.ofNullable(routes);
+    }
+
+    @Override
     public Optional<Route> getRouteById(int id) {
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT * ");
         sql.append("FROM ROUTE ");
         sql.append("WHERE isdeleted = 0 AND route_id = ?");
-        Route route = jdbcTemplate.queryForObject(sql.toString(), new BeanPropertyRowMapper<>(Route.class), id);
-        return Optional.ofNullable(route);
+        List<Route> route = jdbcTemplate.query(sql.toString(), new BeanPropertyRowMapper<>(Route.class), id);
+        if(route.size() == 0){
+            return Optional.empty();
+        }
+        return Optional.ofNullable(route.get(0));
     }
 
     @Override

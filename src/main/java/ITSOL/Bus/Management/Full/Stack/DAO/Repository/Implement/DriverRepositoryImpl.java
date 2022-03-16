@@ -3,7 +3,6 @@ package ITSOL.Bus.Management.Full.Stack.DAO.Repository.Implement;
 import ITSOL.Bus.Management.Full.Stack.DAO.Entity.Drivers;
 import ITSOL.Bus.Management.Full.Stack.DAO.Repository.AbstractRepository;
 import ITSOL.Bus.Management.Full.Stack.DAO.Repository.DriverRepository;
-import ITSOL.Bus.Management.Full.Stack.DTO.Request.DriverRequest;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Repository;
 
@@ -24,13 +23,25 @@ public class DriverRepositoryImpl extends AbstractRepository implements DriverRe
     }
 
     @Override
+    public Optional<List<Drivers>> getTotalDriver(){
+        StringBuilder sql = new StringBuilder();
+        sql.append("SELECT * ");
+        sql.append("FROM DRIVERS ");
+        List<Drivers> drives = jdbcTemplate.query(sql.toString(), new BeanPropertyRowMapper<>(Drivers.class));
+        return Optional.ofNullable(drives);
+    }
+
+    @Override
     public Optional<Drivers> getDriverById(int id) {
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT * ");
         sql.append("FROM DRIVERS ");
         sql.append("WHERE isdeleted = 0 AND id = ?");
-        Drivers driver = jdbcTemplate.queryForObject(sql.toString(), new BeanPropertyRowMapper<>(Drivers.class), id);
-        return Optional.ofNullable(driver);
+        List<Drivers> driver = jdbcTemplate.query(sql.toString(), new BeanPropertyRowMapper<>(Drivers.class), id);
+        if(driver.size() == 0){
+            return Optional.empty();
+        }
+        return Optional.ofNullable(driver.get(0));
     }
 
     @Override
