@@ -57,7 +57,7 @@ public class RouteServiceImpl extends AbstractService implements RouteService {
             throw new ResourceNotFoundException("Resource can't found");
         });
         int curId = routeResponses.size() + 101;
-        Route route = new Route(curId, routeRequest.getDistance(), routeRequest.getStations(),0);
+        Route route = new Route(curId, Float.parseFloat(routeRequest.getDistance()), Integer.parseInt(routeRequest.getStations()),0);
         routeRepository.addRoute(route);
         return Optional.of(objectMapper.convertValue(routeRequest, RouteResponse.class));
     }

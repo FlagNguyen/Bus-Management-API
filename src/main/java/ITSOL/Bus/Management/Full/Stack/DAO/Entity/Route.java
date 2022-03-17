@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Route {
     private int route_ID;
-    private String distance;
-    private String stations;
+    private float distance;
+    private int stations;
     private int isdeleted;
 }

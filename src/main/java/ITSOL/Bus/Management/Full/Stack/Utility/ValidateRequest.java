@@ -14,10 +14,10 @@ public class ValidateRequest {
 
     public static String validLevel(String in) {
         if (in.isEmpty()) throw new ResourceNotFoundException("Empty Driver Level");
-        if (in.matches("[a-fA-F]{1}")) {
+        if (in.matches("[A-F]{1}")) {
             return in;
         } else {
-            throw new InvalidLevelFormatException("Invalid Driver Level Format");
+            throw new InvalidLevelFormatException("Invalid Driver Level Format (Must be A-F)");
         }
     }
 
