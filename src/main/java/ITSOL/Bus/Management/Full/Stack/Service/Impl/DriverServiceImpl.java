@@ -84,7 +84,7 @@ public class DriverServiceImpl extends AbstractService implements DriverService 
     @Override
     public Optional<DriverResponse> deleteDriver(int id) {
         Drivers drivers = driverRepository.getDriverById(id).orElseThrow(() -> {
-            throw new ResourceNotFoundException("Delete Successfully");
+            throw new ResourceNotFoundException("Already Deleted");
         });
         driverRepository.deleteDriver(id);
         return Optional.of(objectMapper.convertValue(drivers, DriverResponse.class));

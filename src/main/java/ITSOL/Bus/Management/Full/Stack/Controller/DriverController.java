@@ -30,7 +30,7 @@ public class DriverController extends AbstractController<DriverService> {
     }
 
     @DeleteMapping(path = "/{id}")
-    public ResponseEntity<?> deletedDriver(@PathVariable int id){
+    public ResponseEntity<?> deleteDriver(@PathVariable int id){
         return response(service.deleteDriver(id));
     }
 }

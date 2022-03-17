@@ -1,3 +1,15 @@
+GET http://localhost:8081/assignment
+
+<> 2022-03-17T164650-1.200.json
+
+###
+
+GET http://localhost:8081/assignment
+
+<> 2022-03-17T164650.200.json
+
+###
+
 POST http://localhost:8081/drivers
 
 ###
