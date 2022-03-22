@@ -1,6 +1,10 @@
 package ITSOL.Bus.Management.Full.Stack.Utility;
 
+import ITSOL.Bus.Management.Full.Stack.DAO.Entity.Drivers;
+import ITSOL.Bus.Management.Full.Stack.DAO.Entity.Route;
 import ITSOL.Bus.Management.Full.Stack.Exception.*;
+
+import java.util.Optional;
 
 public class ValidateRequest {
     public static String validPhone(String in) {
@@ -40,4 +44,32 @@ public class ValidateRequest {
 
     }
 
+    public static Optional<Drivers> validDriverID(Optional<Drivers> driverById) {
+        if(driverById.isEmpty() || driverById.get().equals(null)){
+            throw new NotFoundIDException("This id isn't existed");
+        }else {
+            return driverById;
+        }
+    }
+
+    public static Optional<Route> validRouteID(Optional<Route> routeById) {
+        if (routeById.isEmpty() || routeById.get().equals(null)){
+            throw new NotFoundIDException("This id isn't existed");
+        }else {
+            return routeById;
+        }
+    }
+
+    public static boolean validTotalTurn(int totalTurn, int assignTurn) {
+        int sum = totalTurn + assignTurn;
+        if(sum>15){
+            throw new ExceedTurnException("Assigned too many turn");
+
+        }
+        return false;
+    }
+
+//    public static Optional<List<Assignment>> validTurn(Optional<List<Assignment>> rosterByID) {
+//
+//    }
 }

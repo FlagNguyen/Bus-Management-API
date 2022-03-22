@@ -12,8 +12,6 @@ public interface DriverService {
 
     Optional<DriverResponse> getDriverById(int id);
 
-    Optional<List<DriverResponse>> getTotalDriver();
-
     Optional<DriverResponse> addDriver(DriverRequest driverRequest);
 
     Optional<DriverResponse> updateDriver(DriverRequest driverRequest, int id);

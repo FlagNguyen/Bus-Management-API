@@ -17,7 +17,7 @@ public class ObjectValidator {
     @Qualifier("validator")
     LocalValidatorFactoryBean validatorFactoryBean;
 
-    public <T> String validateRequestandReturnMessage(T t) {
+    public <T> String validateRequestAndReturnMessage(T t) {
         Set<ConstraintViolation<T>> violations = validatorFactoryBean.getValidator().validate(t);
         List<String> mess = new ArrayList<>();
         for (ConstraintViolation<T> violation : violations) {

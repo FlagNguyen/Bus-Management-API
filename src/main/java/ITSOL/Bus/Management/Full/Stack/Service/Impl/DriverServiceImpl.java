@@ -48,21 +48,12 @@ public class DriverServiceImpl extends AbstractService implements DriverService 
     }
 
     @Override
-    public Optional<List<DriverResponse>> getTotalDriver() {
-        List<Drivers> drivers = driverRepository.getTotalDriver().orElseThrow(() -> {
-            throw new ResourceNotFoundException("Resource not found");
-        });
-        return Optional.of(drivers.stream().map(driver -> new DriverResponse(driver.getId(), driver.getName(),
-                driver.getAddress(), driver.getPhone(), driver.getDLevel())).collect(Collectors.toList()));
-    }
-
-    @Override
     public Optional<DriverResponse> addDriver(DriverRequest driverRequest) {
         validateDriverRequestAndReturnMessage(driverRequest);
-        List<DriverResponse> driverResponses = getTotalDriver().orElseThrow(() -> {
-            throw new ResourceNotFoundException("Resource not found");
-        });
-        int curId = driverResponses.size() + 10000;
+
+        Optional<List<Drivers>> driverResponses = driverRepository.getTotalDriver();
+        int curId = driverResponses.get().size() + 10000;
+
         Drivers drivers = new Drivers(curId, driverRequest.getName(),
                 driverRequest.getAddress(),
                 driverRequest.getPhone(),
@@ -74,7 +65,7 @@ public class DriverServiceImpl extends AbstractService implements DriverService 
     @Override
     public Optional<DriverResponse> updateDriver(DriverRequest driverRequest, int id) {
         Drivers drivers = driverRepository.getDriverById(id).orElseThrow(() -> {
-            throw new ResourceNotFoundException("Can't found resource");
+            throw new ResourceNotFoundException("Can't found id");
         });
         validateDriverRequestAndReturnMessage(driverRequest);
         driverRepository.updateDriver(objectMapper.convertValue(driverRequest, Drivers.class), id);
@@ -91,7 +82,7 @@ public class DriverServiceImpl extends AbstractService implements DriverService 
     }
 
     private void validateDriverRequestAndReturnMessage(DriverRequest driverRequest) {
-        String mess = objectValidator.validateRequestandReturnMessage(driverRequest);
+        String mess = objectValidator.validateRequestAndReturnMessage(driverRequest);
         if (!ObjectUtils.isEmpty(mess)) {
             throw new InvalidRequestException(mess);
         }

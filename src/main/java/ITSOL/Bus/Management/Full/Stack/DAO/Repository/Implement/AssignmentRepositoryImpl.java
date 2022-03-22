@@ -37,8 +37,8 @@ public class AssignmentRepositoryImpl extends AbstractRepository implements Assi
     public Optional<Assignment> assign(Assignment assignment) {
         StringBuilder sql = new StringBuilder();
         sql.append("INSERT INTO ASSIGNMENT ");
-        sql.append(" (assign_id, driver_id, route_id, turn) ");
-        sql.append("VALUES (?,?,?,?)");
+        sql.append(" (assign_id, driver_id, route_id, turn, isdeleted) ");
+        sql.append("VALUES (?,?,?,?,0)");
         jdbcTemplate.update(sql.toString(), assignment.getAssign_ID(), assignment.getDriver_ID(), assignment.getRoute_ID(), assignment.getTurn());
         return getRosterByID(assignment.getAssign_ID());
     }
@@ -61,5 +61,16 @@ public class AssignmentRepositoryImpl extends AbstractRepository implements Assi
         sql.append(" WHERE assign_id = ? ");
         jdbcTemplate.update(sql.toString(),assignment_id);
         return Optional.empty();
+    }
+
+    @Override
+    public Optional<List<Assignment>> getRosterByDriverID(int id) {
+        StringBuilder sql = new StringBuilder();
+        sql.append("SELECT * ");
+        sql.append("FROM ASSIGNMENT ");
+        sql.append("WHERE isdeleted = 0 AND driver_id = ?");
+        List<Assignment> assignments = jdbcTemplate.query(sql.toString(), new BeanPropertyRowMapper<>(Assignment.class), id);
+        if (assignments.size() == 0) return Optional.empty();
+        return Optional.ofNullable(assignments);
     }
 }

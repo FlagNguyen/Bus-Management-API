@@ -11,4 +11,5 @@ public interface AssignmentRepository {
     Optional<Assignment> assign(Assignment assignment);
     Optional<Assignment> updateAssign(Assignment assignment, int assignment_id);
     Optional<Assignment> deleteAssign(int assignment_id);
+    Optional<List<Assignment>> getRosterByDriverID(int id);
 }

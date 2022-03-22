@@ -40,4 +40,14 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<ErrorResponse> handleInvalidFloatFormat(InvalidFloatFormat e){
         return new ResponseEntity<>(new ErrorResponse("005","Invalid Float Format"),null,HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler({NotFoundIDException.class})
+    public ResponseEntity<ErrorResponse> handleNotFoundIDException(NotFoundIDException e){
+        return new ResponseEntity<>(new ErrorResponse("006","This id not available"),null,HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler({ExceedTurnException.class})
+    public ResponseEntity<ErrorResponse> handleExceedTurnException(ExceedTurnException e){
+        return new ResponseEntity<>(new ErrorResponse("007","Exceed Total Turn"),null,HttpStatus.BAD_REQUEST);
+    }
 }

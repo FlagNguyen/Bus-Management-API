@@ -53,10 +53,10 @@ public class RouteServiceImpl extends AbstractService implements RouteService {
     @Override
     public Optional<RouteResponse> addRoute(RouteRequest routeRequest) {
         validateRouteRequestAndReturnMessage(routeRequest);
-        List<RouteResponse> routeResponses = getTotalRoute().orElseThrow(()->{
-            throw new ResourceNotFoundException("Resource can't found");
-        });
-        int curId = routeResponses.size() + 101;
+
+        Optional<List<RouteResponse>> routeResponses = getTotalRoute();
+        int curId = routeResponses.get().size() + 101;
+
         Route route = new Route(curId, Float.parseFloat(routeRequest.getDistance()), Integer.parseInt(routeRequest.getStations()),0);
         routeRepository.addRoute(route);
         return Optional.of(objectMapper.convertValue(routeRequest, RouteResponse.class));
@@ -66,7 +66,7 @@ public class RouteServiceImpl extends AbstractService implements RouteService {
     public Optional<RouteResponse> updateRoute(RouteRequest routeRequest, int id) {
         validateRouteRequestAndReturnMessage(routeRequest);
         Route route = routeRepository.getRouteById(id).orElseThrow(()->{
-            throw new ResourceNotFoundException("This's id not found");
+            throw new ResourceNotFoundException("Can't found this id");
         });
         routeRepository.updateRoute(objectMapper.convertValue(routeRequest, Route.class),id);
         return getRouteById(id);
@@ -82,7 +82,7 @@ public class RouteServiceImpl extends AbstractService implements RouteService {
     }
 
     private void validateRouteRequestAndReturnMessage(RouteRequest routeRequest){
-        String mess = objectValidator.validateRequestandReturnMessage(routeRequest);
+        String mess = objectValidator.validateRequestAndReturnMessage(routeRequest);
         if(!ObjectUtils.isEmpty(mess)){
             throw new InvalidRequestException(mess);
         }
