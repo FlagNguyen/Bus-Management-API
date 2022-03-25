@@ -69,7 +69,4 @@ public class ValidateRequest {
         return false;
     }
 
-//    public static Optional<List<Assignment>> validTurn(Optional<List<Assignment>> rosterByID) {
-//
-//    }
 }
