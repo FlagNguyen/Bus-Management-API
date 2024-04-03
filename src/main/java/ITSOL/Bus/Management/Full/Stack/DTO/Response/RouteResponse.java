@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RouteResponse {
-    private int route_ID;
+    private int routeId;
     private float distance;
     private int stations;
 }
